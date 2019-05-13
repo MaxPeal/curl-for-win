@@ -50,10 +50,11 @@ artifacts:
     name: all
 init:
    - sh: curl -sfL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
-   - ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('$env:appveyor_rdp_ps_url)'))}
-   - ps: if($env:APPVEYOR_RDP_PS_URL) {iex ((new-object net.webclient).DownloadString('$env:APPVEYOR_RDP_PS_URL)'))}
-   - ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('$env:appveyor_rdp_ps_url)'))}
-   - ps: if($env:APPVEYOR_RDP_PS_URL) {iex ((new-object net.webclient).DownloadString('$env:appveyor_rdp_ps_url)'))}
+   - ps: if ($env:APPVEYOR_RDP_PS_URL) {$PSURL=$env:APPVEYOR_RDP_PS_URL}else{$PSURL="https://raw.githubusercontent.com/appveyor/ci/59e9f773412d02b5cbdf688117ce5bc297cd367e/scripts/enable-rdp.ps1"}
+   - ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('$PSURL'))}
+   - ps: if($env:APPVEYOR_RDP_PS_URL) {iex ((new-object net.webclient).DownloadString('$PSURL'))}
+   - ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('$PSURL'))}
+   - ps: if($env:APPVEYOR_RDP_PS_URL) {iex ((new-object net.webclient).DownloadString('$PSURL)'))}
    #- ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/59e9f773412d02b5cbdf688117ce5bc297cd367e/scripts/enable-rdp.ps1'))}
    #- ps: if($env:appveyor_rdp_ps_url) {iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/59e9f773412d02b5cbdf688117ce5bc297cd367e/scripts/enable-rdp.ps1'))}
 on_finish:
