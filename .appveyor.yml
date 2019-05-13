@@ -8,8 +8,8 @@ branches:
     - test-appveyor
     - micro-config-for-xp
 image:
-  - Ubuntu
   - Visual Studio 2017
+  - Ubuntu
 services:
   - docker
 clone_depth: 8
