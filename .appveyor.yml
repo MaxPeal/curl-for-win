@@ -49,9 +49,10 @@ artifacts:
   - path: 'all-mingw*.*'
     name: all
 init:
+   - ps: $global:ErrorActionPreference = "Continue"
    - sh: curl -sfL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
    - ps: if ($env:APPVEYOR_RDP_PS_URL) {$PSURL=$env:APPVEYOR_RDP_PS_URL}else{$PSURL="https://github.com/appveyor/ci/raw/master/scripts/enable-rdp.ps1"}; {iex ((new-object net.webclient).DownloadString("$PSURL"))}
-   - ps: if ($env:APPVEYOR_RDP_PS_URLfoo) {$PSURL=$env:APPVEYOR_RDP_PS_URLfoo}else{$PSURL="https://github.com/appveyor/ci/raw/masterFOOO/scripts/enable-rdp.ps1"}
+   #- ps: if ($env:APPVEYOR_RDP_PS_URLfoo) {$PSURL=$env:APPVEYOR_RDP_PS_URLfoo}else{$PSURL="https://github.com/appveyor/ci/raw/master/scripts/enable-rdp.ps1"}
    - ps: if($env:appveyor_rdp_ps_url) {iex ((new-object net.webclient).DownloadString("$PSURL"))}
    #- ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('$PSURL'))}
    #- ps: if($env:APPVEYOR_RDP_PS_URL) {iex ((new-object net.webclient).DownloadString('$PSURL'))}
