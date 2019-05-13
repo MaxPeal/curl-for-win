@@ -6,6 +6,7 @@ branches:
     - master
     - dev-appveyor
     - test-appveyor
+    - micro-config-for-xp
 image:
   - Ubuntu
 # - Visual Studio 2017
@@ -47,8 +48,9 @@ artifacts:
     name: master
   - path: 'all-mingw*.*'
     name: all
-# init:
-#   - sh: curl -sfL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
-#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-# on_finish:
-#   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+ init:
+   - sh: curl -sfL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+   - ps: If (-not ([string]::IsNullOrEmpty($env:appveyor_rdp_ps_url))) {iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/59e9f773412d02b5cbdf688117ce5bc297cd367e/scripts/enable-rdp.ps1'))}
+   - ps: if($env:appveyor_rdp_ps_url) {{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/59e9f773412d02b5cbdf688117ce5bc297cd367e/scripts/enable-rdp.ps1'))}
+ on_finish:
+   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
